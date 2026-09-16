@@ -1,0 +1,14 @@
+title: "Active Directory Basics — TryHackMe"
+description: "Professional Windows Active Directory lab documentation."
+
+theme: jekyll-theme-primer
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+include:
+  - docs
