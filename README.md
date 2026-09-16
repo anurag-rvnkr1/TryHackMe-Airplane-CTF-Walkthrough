@@ -150,16 +150,11 @@ Every stage is documented with:
 TryHackMe-Airplane-CTF-Walkthrough/
 │
 ├── README.md
-├── LICENSE
-├── SECURITY.md
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
 ├── _config.yml
 │
 ├── Documentation/
 │   ├── THM_Airplane_Documentation.md
-│   ├── THM_Airplane_Report.docx
-│   └── Attack_Chain.md
+│   ├── THM_Airplane_Report.pdf
 │
 ├── Resources/
 │   ├── notes.md
@@ -170,11 +165,10 @@ TryHackMe-Airplane-CTF-Walkthrough/
 │
 ├── docs/
 │   ├── index.md
-│   ├── methodology.md
-│   ├── privilege-escalation.md
 │   └── assets/
 │       ├── banner.png
-│       └── diagrams/
+│       ├── css/
+│         ├── custom.scss
 │
 └── Screenshots/
     ├── figure-1-hosts-file.png
