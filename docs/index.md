@@ -1,131 +1,81 @@
-# ✈️ Airplane — TryHackMe Penetration Testing Report
+# ✈️ Airplane — TryHackMe Penetration Testing Walkthrough
 
 <p align="center">
-  <img src="assets/banner.png" width="100%" alt="Airplane TryHackMe Banner"/>
+  <img src="assets/banner.png" width="100%" alt="Airplane Banner"/>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/TryHackMe-Airplane-red?style=for-the-badge&logo=tryhackme"/>
-  <img src="https://img.shields.io/badge/Linux-Penetration%20Testing-FCC624?style=for-the-badge&logo=linux&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Difficulty-Medium-orange?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Documentation-GitHub%20Pages-blue?style=for-the-badge"/>
-</p>
-
-<p align="center">
-Professional documentation of the <strong>Airplane</strong> TryHackMe room following a penetration testing methodology from reconnaissance to root privilege escalation.
+  <img src="https://img.shields.io/badge/Linux-Medium-orange?style=for-the-badge&logo=linux&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Category-Web%20Exploitation-blue?style=for-the-badge"/>
 </p>
 
 ---
 
-# 📑 Table of Contents
+## 📌 Overview
 
-* Executive Summary
-* Lab Overview
-* Attack Chain
-* Assessment Methodology
-* Reconnaissance
-* Web Enumeration
-* Local File Inclusion
-* Linux Enumeration
-* Hidden Service Discovery
-* Initial Access
-* Privilege Escalation
-* Root Verification
-* MITRE ATT&CK Mapping
-* Security Findings
-* Remediation
-* Lessons Learned
-* References
+This documentation presents a complete penetration testing walkthrough for the **Airplane** room on **TryHackMe**, following a professional offensive security methodology from reconnaissance to root privilege escalation.
+
+> **Environment:** Authorized TryHackMe Lab  
+> **Assessment Type:** Black-box Penetration Test  
+> **Operating System:** Linux
+
+---
+
+## 📑 Table of Contents
+
+- Executive Summary
+- Assessment Methodology
+- Reconnaissance
+- Service Enumeration
+- Local File Inclusion
+- Linux Enumeration
+- Hidden Service Discovery
+- Initial Access
+- Privilege Escalation
+- MITRE ATT&CK Mapping
+- Security Findings
+- Remediation
+- Lessons Learned
+- Conclusion
 
 ---
 
 # Executive Summary
 
-The **Airplane** room is a Linux-based Capture The Flag challenge on TryHackMe that simulates a realistic web application penetration test. The assessment demonstrates how multiple vulnerabilities—including **Local File Inclusion (LFI)**, an exposed **gdbserver** instance, **SUID misconfiguration**, and an insecure **sudo wildcard rule**—can be chained into complete administrative compromise. <Cite ref={["turn0search0","turn0search3"]}/>
+The Airplane room demonstrates a realistic attack chain beginning with reconnaissance, identifying a Local File Inclusion vulnerability, enumerating Linux processes through the `/proc` filesystem, discovering an exposed `gdbserver`, obtaining Remote Code Execution, and escalating privileges to **root** using Linux privilege escalation techniques.
 
-This report documents the complete methodology used during the assessment while intentionally **redacting challenge flags** to preserve academic integrity.
-
----
-
-# Lab Overview
-
-| Property         | Value                      |
-| ---------------- | -------------------------- |
-| Platform         | TryHackMe                  |
-| Room             | Airplane                   |
-| Operating System | Linux                      |
-| Difficulty       | Medium                     |
-| Assessment Type  | Black-box Penetration Test |
-| Objective        | Obtain Root Access         |
-
-### Skills Demonstrated
-
-* Network Reconnaissance
-* Service Enumeration
-* Local File Inclusion
-* Linux Enumeration
-* Process Discovery
-* Remote Code Execution
-* Reverse Shell Stabilization
-* Privilege Escalation
-* SSH Persistence
-* Security Reporting
-
----
-
-# Attack Chain Overview
-
-```text
-Reconnaissance
-      │
-      ▼
-Nmap Enumeration
-      │
-      ▼
-HTTP Service Discovery
-      │
-      ▼
-Local File Inclusion
-      │
-      ▼
-/proc Enumeration
-      │
-      ▼
-Hidden gdbserver
-      │
-      ▼
-Remote Code Execution
-      │
-      ▼
-Reverse Shell
-      │
-      ▼
-SUID Privilege Escalation
-      │
-      ▼
-SSH Persistence
-      │
-      ▼
-Wildcard sudo Exploit
-      │
-      ▼
-ROOT ACCESS
-```
+This report documents every stage with technical explanations, evidence, and defensive recommendations.
 
 ---
 
 # Assessment Methodology
 
-This assessment follows a structured penetration testing lifecycle inspired by **PTES**.
+## Attack Lifecycle
 
-| Phase                | Objective                                    |
-| -------------------- | -------------------------------------------- |
-| Reconnaissance       | Discover exposed services.                   |
-| Enumeration          | Gather application and OS intelligence.      |
-| Exploitation         | Gain an initial foothold.                    |
-| Post Exploitation    | Enumerate users, permissions, and processes. |
-| Privilege Escalation | Obtain administrative privileges.            |
-| Reporting            | Document findings and remediation.           |
+<p align="center">
+  <img src="assets/attack-chain.png" width="90%">
+</p>
+
+```text
+Reconnaissance
+      ↓
+Service Enumeration
+      ↓
+Web Enumeration
+      ↓
+LFI Exploitation
+      ↓
+Linux Enumeration
+      ↓
+gdbserver Discovery
+      ↓
+Remote Code Execution
+      ↓
+Privilege Escalation
+      ↓
+Root Access
+```
 
 ---
 
@@ -133,266 +83,260 @@ This assessment follows a structured penetration testing lifecycle inspired by *
 
 ## Host Resolution
 
-The target hostname was added to the local hosts file so browser redirections and tools could resolve `airplane.thm` correctly.
+The target hostname was added to the local hosts file before enumeration.
 
-<img src="../Screenshots/figure-1-hosts-file.png" width="95%">
+<p align="center">
+<img src="assets/figure-1-hosts-file.png" width="95%">
+</p>
 
-**Figure 1.** Host resolution configuration using `/etc/hosts`.
+**Figure 1 — Host Resolution Configuration**
 
 ---
 
 ## Full TCP Port Scan
 
-A complete TCP SYN scan was performed.
+A complete TCP SYN scan identified the exposed services.
 
 ```bash
 nmap -sS -Pn -T4 -p- airplane.thm
 ```
 
-<img src="../Screenshots/figure-2-nmap-scan.png" width="95%">
+<p align="center">
+<img src="assets/figure-2-nmap-scan.png" width="95%">
+</p>
 
-**Figure 2.** Full TCP port scan identifying SSH, HTTP, and an unknown service.
+**Figure 2 — Full TCP Port Scan**
 
 ### Open Ports
 
 | Port | Service |
-| ---- | ------- |
-| 22   | SSH     |
+|------|---------|
+| 22 | SSH |
 | 6048 | Unknown |
-| 8000 | HTTP    |
-
-The unidentified port later became the primary exploitation target.
+| 8000 | Werkzeug HTTP |
 
 ---
 
 ## Service Enumeration
 
-Service and version detection provided additional intelligence.
+A second scan identified service versions and HTTP characteristics.
 
 ```bash
 nmap -sV -sC -p22,6048,8000 airplane.thm
 ```
 
-<img src="../Screenshots/figure-3-service-enumeration.png" width="95%">
+<p align="center">
+<img src="assets/figure-3-service-enumeration.png" width="95%">
+</p>
 
-**Figure 3.** Service and version detection results.
+**Figure 3 — Service Version Detection**
 
 ### Findings
 
-* OpenSSH service.
-* Werkzeug Python HTTP server.
-* Unknown listener on port **6048**.
+- Werkzeug Python Web Server.
+- OpenSSH.
+- Unknown service on port 6048 requiring further investigation.
 
 ---
 
-# 2. Web Enumeration
+# 2. Web Application Enumeration
 
-The web application on port **8000** accepted a `page=` parameter that dynamically loaded HTML content.
+The web application redirected requests to a parameterized endpoint.
 
-## Parameter Analysis
+Example:
 
-The parameter was tested for traversal behavior.
+```
+?page=index.html
+```
 
-<img src="../Screenshots/figure-4-lfi-discovery.png" width="95%">
+This suggested a potential file inclusion attack surface.
 
-**Figure 4.** Discovery of Local File Inclusion through the `page` parameter.
+---
+
+## Local File Inclusion Discovery
+
+Directory traversal payloads were tested against the `page` parameter.
+
+<p align="center">
+<img src="assets/figure-4-lfi-discovery.png" width="95%">
+</p>
+
+**Figure 4 — Local File Inclusion Identified**
+
+### Impact
+
+The application allowed arbitrary file reads from the server filesystem.
+
+---
+
+## Reading Sensitive Files
+
+The LFI vulnerability exposed Linux system files.
+
+<p align="center">
+<img src="assets/figure-5-passwd-enumeration.png" width="95%">
+</p>
+
+**Figure 5 — `/etc/passwd` Enumeration**
+
+### Information Collected
+
+| File | Purpose |
+|------|---------|
+| `/etc/passwd` | Local users |
+| `/etc/group` | Group memberships |
+| `/proc/self/environ` | Process environment |
+| `/proc/net/tcp` | Network sockets |
+
+---
+
+# 3. Linux Enumeration
+
+## Enumerating `/proc/net/tcp`
+
+The `/proc` filesystem exposed active network sockets.
+
+<p align="center">
+<img src="assets/figure-6-proc-net-tcp.png" width="95%">
+</p>
+
+**Figure 6 — Hidden TCP Listener Enumeration**
 
 ### Observation
 
-The application allowed traversal outside its intended directory, confirming a **Local File Inclusion vulnerability**.
-
----
-
-# 3. Local File Inclusion
-
-## Enumerating `/etc/passwd`
-
-The LFI vulnerability exposed sensitive Linux files.
-
-<img src="../Screenshots/figure-5-passwd-enumeration.png" width="95%">
-
-**Figure 5.** Reading `/etc/passwd` through the vulnerable endpoint.
-
-### Intelligence Gathered
-
-* Valid Linux usernames.
-* Home directories.
-* Shell information.
-
-This information became valuable during later privilege escalation.
-
----
-
-# 4. Linux Enumeration
-
-After confirming LFI, Linux runtime information was gathered through `/proc`.
-
-## Enumerating Network Connections
-
-<img src="../Screenshots/figure-6-proc-net-tcp.png" width="95%">
-
-**Figure 6.** Enumerating `/proc/net/tcp` to identify hidden listening sockets.
-
-### Discovery
-
-A hexadecimal TCP listener corresponded to **port 6048**.
-
-### Why It Matters
-
-Internal services often expose additional attack surfaces unavailable through normal web enumeration.
+A hexadecimal port corresponded to **6048**, confirming an internal service.
 
 ---
 
 ## Process Enumeration
 
-The `/proc` filesystem was used to correlate listening ports with running processes.
+Running processes were enumerated to identify ownership of the hidden listener.
 
-<img src="../Screenshots/figure-7-gdbserver-discovery.png" width="95%">
+<p align="center">
+<img src="assets/figure-7-gdbserver-discovery.png" width="95%">
+</p>
 
-**Figure 7.** Process enumeration identifying `gdbserver`.
-
-### Finding
-
-A remote debugger service was exposed without authentication.
-
----
-
-# 5. Hidden Service Analysis
-
-## gdbserver
-
-`gdbserver` is a remote debugging service intended for development environments.
-
-### Security Risk
-
-| Observation           | Impact                           |
-| --------------------- | -------------------------------- |
-| Network Accessible    | Remote attack surface.           |
-| Runs under local user | Initial foothold opportunity.    |
-| No authentication     | Potential Remote Code Execution. |
-
----
-
-# 6. Initial Access
-
-## Remote Code Execution
-
-A compatible exploitation technique was used against the exposed debugger service.
-
-<img src="../Screenshots/figure-8-reverse-shell.png" width="95%">
-
-**Figure 8.** Successful reverse shell connection.
-
-### Outcome
-
-* Initial shell obtained.
-* Low-privileged user access established.
-
----
-
-## Reverse Shell Stabilization
-
-A PTY shell was spawned for improved interaction.
-
-### Benefits
-
-* Interactive terminal.
-* Command history.
-* Stable privilege escalation workflow.
-
----
-
-# 7. Privilege Escalation
-
-## Enumerating SUID Binaries
-
-The filesystem was searched for SUID-enabled binaries.
-
-```bash
-find / -perm -4000 -type f 2>/dev/null
-```
-
-<img src="../Screenshots/figure-9-suid-enumeration.png" width="95%">
-
-**Figure 9.** Enumeration of SUID binaries.
-
-### Observation
-
-A SUID-enabled `find` binary was available.
-
----
-
-## GTFOBins Privilege Escalation
-
-The documented GTFOBins technique was applied.
-
-<img src="../Screenshots/figure-10-suid-find-privesc.png" width="95%">
-
-**Figure 10.** SUID `find` privilege escalation.
+**Figure 7 — `gdbserver` Process Discovery**
 
 ### Result
 
-Command execution with elevated privileges allowed access to another local account.
-
----
-
-# 8. SSH Persistence
-
-Reverse shells were replaced with authenticated SSH access.
-
-<img src="../Screenshots/figure-11-ssh-persistence.png" width="95%">
-
-**Figure 11.** Successful SSH key authentication.
-
-### Advantages
-
-| Reverse Shell | SSH Session |
-| ------------- | ----------- |
-| Temporary     | Persistent  |
-| Limited       | Interactive |
-| Unstable      | Reliable    |
-
----
-
-# 9. Root Escalation
-
-## Reviewing sudo Permissions
-
-`sudo -l` revealed a wildcard rule permitting privileged execution.
-
-### Vulnerability
-
-A wildcard path inside `sudoers` trusted attacker-controlled filesystem paths.
-
----
-
-## Wildcard sudo Exploitation
-
-<img src="../Screenshots/figure-12-sudo-exploit.png" width="95%">
-
-**Figure 12.** Exploiting the wildcard `sudo` misconfiguration.
+The service listening on port **6048** was identified as **gdbserver**.
 
 ### Security Impact
 
-The misconfigured rule permitted privileged execution outside the intended directory.
+A remotely accessible debugger significantly expands attack surface.
 
 ---
 
-# 10. Root Verification
+# 4. Initial Access
 
-Administrative privileges were verified after successful exploitation.
+## Remote Code Execution
 
-<img src="../Screenshots/figure-13-root-shell.png" width="95%">
+The exposed debugger service was leveraged to execute a reverse shell payload.
 
-**Figure 13.** Root shell verification.
+<p align="center">
+<img src="assets/figure-8-reverse-shell.png" width="95%">
+</p>
 
-### Verification Commands
+**Figure 8 — Reverse Shell Established**
 
-* `whoami`
-* `id`
-* `hostname`
+### Outcome
+
+Initial access was obtained as a low-privileged Linux user.
+
+---
+
+## Shell Stabilization
+
+A PTY shell was created to improve interaction and support post-exploitation activities.
+
+### Benefits
+
+- Interactive shell.
+- Proper terminal behavior.
+- Reliable privilege escalation workflow.
+
+---
+
+# 5. Privilege Escalation
+
+## SUID Enumeration
+
+The filesystem was inspected for SUID-enabled binaries.
+
+<p align="center">
+<img src="assets/figure-9-suid-enumeration.png" width="95%">
+</p>
+
+**Figure 9 — SUID Binary Enumeration**
+
+### Key Finding
+
+A SUID-enabled `find` binary provided a privilege escalation opportunity.
+
+---
+
+## GTFOBins Technique
+
+The `find` binary was abused using the documented GTFOBins technique.
+
+<p align="center">
+<img src="assets/figure-10-suid-find-privesc.png" width="95%">
+</p>
+
+**Figure 10 — SUID `find` Privilege Escalation**
+
+### Outcome
+
+Access was escalated to a higher-privileged local account.
+
+---
+
+## SSH Persistence
+
+SSH key authentication was configured for stable authenticated access.
+
+<p align="center">
+<img src="assets/figure-11-ssh-persistence.png" width="95%">
+</p>
+
+**Figure 11 — SSH Key Authentication**
+
+### Why SSH?
+
+- Persistent access.
+- Reliable terminal.
+- Easier post-exploitation workflow.
+
+---
+
+## Wildcard `sudo` Misconfiguration
+
+A vulnerable wildcard rule inside `sudoers` allowed unintended command execution.
+
+<p align="center">
+<img src="assets/figure-12-sudo-exploit.png" width="95%">
+</p>
+
+**Figure 12 — Wildcard `sudo` Exploitation**
 
 ### Result
+
+The crafted path bypassed the intended restriction and executed with root privileges.
+
+---
+
+## Root Verification
+
+Administrative privileges were verified after exploitation.
+
+<p align="center">
+<img src="assets/figure-13-root-shell.png" width="95%">
+</p>
+
+**Figure 13 — Root Shell Verification**
+
+### Validation
 
 ```text
 uid=0(root)
@@ -400,123 +344,114 @@ gid=0(root)
 groups=0(root)
 ```
 
-Root access was successfully obtained.
-
----
-
-# Flag Verification
-
-To preserve the educational integrity of the TryHackMe room, challenge flags have been intentionally redacted.
-
-```text
-user.txt → THM{********************************}
-
-root.txt → THM{********************************}
-```
+The assessment successfully achieved full administrative access.
 
 ---
 
 # MITRE ATT&CK Mapping
 
-| Tactic               | Technique                                 |
-| -------------------- | ----------------------------------------- |
-| Initial Access       | T1190 – Exploit Public-Facing Application |
-| Discovery            | T1082 – System Information Discovery      |
-| Discovery            | T1057 – Process Discovery                 |
-| Discovery            | T1046 – Network Service Discovery         |
-| Execution            | T1059 – Command Interpreter               |
-| Persistence          | T1098.004 – SSH Authorized Keys           |
-| Privilege Escalation | T1548 – Abuse Elevation Control Mechanism |
+| Tactic | Technique |
+|--------|-----------|
+| Initial Access | Exploit Public-Facing Application |
+| Discovery | Process Discovery |
+| Discovery | Network Service Discovery |
+| Execution | Command & Scripting Interpreter |
+| Persistence | SSH Authorized Keys |
+| Privilege Escalation | Abuse Elevation Control Mechanism |
 
 ---
 
 # Security Findings
 
-| Finding                | Severity    |
-| ---------------------- | ----------- |
-| Local File Inclusion   | 🔴 High     |
-| Exposed gdbserver      | 🔴 Critical |
-| Information Disclosure | 🟠 High     |
-| Unsafe SUID Binary     | 🟠 High     |
-| Wildcard sudo          | 🔴 Critical |
+| Finding | Severity |
+|---------|----------|
+| Local File Inclusion | 🔴 High |
+| Exposed `gdbserver` | 🔴 Critical |
+| SUID Misconfiguration | 🟠 High |
+| Wildcard `sudo` Rule | 🔴 Critical |
 
 ---
 
-# Remediation Recommendations
+# Defensive Recommendations
 
 ## Web Application
 
-* Validate file paths.
-* Prevent traversal sequences.
-* Implement allowlists.
+- Validate user-controlled file paths.
+- Prevent directory traversal.
+- Restrict filesystem access.
 
 ## Linux Hardening
 
-* Audit SUID binaries.
-* Remove unnecessary privileges.
-* Apply least privilege.
+- Audit SUID binaries.
+- Remove unnecessary privileged binaries.
+- Apply least privilege.
 
-## Service Security
+## SSH
 
-* Disable remote debugging.
-* Restrict internal listeners.
-* Monitor unexpected services.
+- Audit `authorized_keys`.
+- Restrict write permissions.
+- Monitor authentication events.
 
-## SSH Hardening
+## Services
 
-* Protect `authorized_keys`.
-* Monitor new keys.
-* Disable unused authentication methods.
+- Disable remote debugging in production.
+- Restrict internal services with firewall rules.
+- Monitor unexpected listeners.
 
 ---
 
 # Lessons Learned
 
-### Offensive Security
+### Technical
 
-* Enumeration drives exploitation.
-* `/proc` provides valuable runtime intelligence.
-* Debug services should never be exposed publicly.
+- Local File Inclusion exploitation.
+- `/proc` filesystem enumeration.
+- Hidden service discovery.
+- Linux privilege escalation methodology.
+- SSH persistence.
 
-### Defensive Security
+### Documentation
 
-* Misconfigurations often chain together.
-* Monitoring privileged binaries reduces attack surface.
-* Secure sudo configuration is essential.
+- Evidence-based reporting.
+- MITRE ATT&CK mapping.
+- Remediation-focused findings.
+- Professional screenshot organization.
 
 ---
 
 # Assessment Outcome
 
-| Objective            | Status |
-| -------------------- | ------ |
-| Reconnaissance       | ✅      |
-| Enumeration          | ✅      |
-| Initial Access       | ✅      |
-| Privilege Escalation | ✅      |
-| Root Access          | ✅      |
-| Documentation        | ✅      |
+| Objective | Status |
+|-----------|--------|
+| Reconnaissance | ✅ |
+| Web Enumeration | ✅ |
+| LFI Exploitation | ✅ |
+| Remote Code Execution | ✅ |
+| Privilege Escalation | ✅ |
+| Root Access | ✅ |
 
 ---
 
 # References
 
-* TryHackMe — Airplane Room.
-* MITRE ATT&CK Framework.
-* GTFOBins.
-* HackTricks Linux Privilege Escalation.
-* OWASP Path Traversal & Local File Inclusion.
-
-Additional learning resources were consulted for methodology and Linux privilege escalation concepts. <Cite ref={["turn0search0","turn0search3","turn0search6"]}/>
+- TryHackMe Airplane Room.
+- MITRE ATT&CK Framework.
+- GTFOBins.
+- HackTricks Linux Privilege Escalation.
+- OWASP Path Traversal Documentation.
 
 ---
 
-# About This Portfolio Project
+## Repository Information
 
-This repository demonstrates a complete penetration testing workflow performed within an **authorized TryHackMe laboratory**. The documentation is structured as a professional security assessment report and is intended to showcase practical Linux exploitation, privilege escalation, and cybersecurity reporting skills for portfolio and educational purposes.
+| Project | Value |
+|---------|-------|
+| Repository | TryHackMe-Airplane-CTF-Walkthrough |
+| Author | Anurag Ravankar |
+| Category | Penetration Testing Documentation |
+| Platform | TryHackMe |
+| Environment | Authorized Training Lab |
 
 ---
 
-<p align="center">
-  <strong>© Anurag Ravankar • Cybersecurity Portfolio Project</strong>
-</p>
+> **Disclaimer:** This documentation was created for an authorized TryHackMe training environment. Challenge flags are intentionally redacted to preserve academic integrity.
