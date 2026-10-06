@@ -1,7 +1,13 @@
-title: "Active Directory Basics — TryHackMe"
-description: "Professional Windows Active Directory lab documentation."
+```yaml
+title: "Cybersecurity CTF Portfolio"
+description: "Professional cybersecurity CTF, penetration testing, and security research documentation."
 
 theme: jekyll-theme-primer
+
+markdown: kramdown
+
+kramdown:
+  input: GFM
 
 plugins:
   - jekyll-relative-links
@@ -12,3 +18,14 @@ relative_links:
 
 include:
   - docs
+
+sass:
+  style: compressed
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+```
