@@ -1,4 +1,4 @@
-```scss
+
 /*
  * ============================================================
  * CYBERSECURITY CTF PORTFOLIO — MASTER DESIGN SYSTEM
@@ -1292,9 +1292,265 @@ hr {
     color: #111111;
   }
 }
+/* ============================================================
+   29. GLOBAL PORTFOLIO SHELL
+   ============================================================ */
 
+.skip-link {
+  position: fixed;
+
+  top: 12px;
+  left: 12px;
+
+  z-index: 9999;
+
+  padding: 9px 14px;
+
+  background: var(--cyber-panel);
+
+  color: var(--cyber-green);
+
+  border: 1px solid var(--cyber-green);
+
+  border-radius: var(--cyber-radius-small);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  transform: translateY(-160%);
+
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* ------------------------------------------------------------
+   Portfolio Header
+   ------------------------------------------------------------ */
+
+.portfolio-header {
+  width: 100%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 18, 16, 0.98),
+      rgba(5, 8, 7, 0.94)
+    );
+
+  border-bottom: 1px solid var(--cyber-border);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.22);
+
+  position: relative;
+
+  z-index: 10;
+}
+
+.portfolio-header-inner {
+  max-width: var(--cyber-content-width);
+
+  margin: 0 auto;
+
+  min-height: 64px;
+
+  padding: 0 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+/* ------------------------------------------------------------
+   Portfolio Brand
+   ------------------------------------------------------------ */
+
+.portfolio-brand {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  border-bottom: 0;
+
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.portfolio-brand:hover {
+  border-bottom: 0;
+
+  color: #ffffff;
+}
+
+.portfolio-brand-symbol {
+  color: var(--cyber-green);
+
+  font-size: 1rem;
+
+  font-weight: 700;
+}
+
+.portfolio-brand-text {
+  color: var(--cyber-text);
+
+  white-space: nowrap;
+}
+
+
+/* ------------------------------------------------------------
+   Security Status
+   ------------------------------------------------------------ */
+
+.portfolio-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--cyber-muted);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.08em;
+
+  white-space: nowrap;
+}
+
+.status-indicator {
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--cyber-green);
+
+  box-shadow:
+    0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+
+/* ------------------------------------------------------------
+   Main Site Content
+   ------------------------------------------------------------ */
+
+.site-main {
+  width: 100%;
+
+  min-height: calc(100vh - 130px);
+}
+
+
+/* ------------------------------------------------------------
+   Global Footer
+   ------------------------------------------------------------ */
+
+.portfolio-global-footer {
+  border-top: 1px solid var(--cyber-border);
+
+  background: var(--cyber-bg-soft);
+
+  padding: 22px 20px;
+
+  margin-top: 30px;
+}
+
+.portfolio-footer-inner {
+  max-width: var(--cyber-content-width);
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  color: var(--cyber-muted);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.05em;
+
+  text-align: center;
+}
+
+.footer-separator {
+  color: var(--cyber-green);
+
+  opacity: 0.7;
+}
+
+
+/* ------------------------------------------------------------
+   Mobile Header
+   ------------------------------------------------------------ */
+
+@media (max-width: 560px) {
+
+  .portfolio-header-inner {
+    min-height: 58px;
+
+    padding: 0 15px;
+  }
+
+  .portfolio-brand-text {
+    font-size: 0.72rem;
+  }
+
+  .portfolio-status {
+    font-size: 0.58rem;
+  }
+
+  .portfolio-status span:last-child {
+    display: none;
+  }
+
+  .portfolio-footer-inner {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .footer-separator {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   END GLOBAL PORTFOLIO SHELL
+   ============================================================ */
 
 /* ============================================================
    END OF CYBERSECURITY CTF PORTFOLIO DESIGN SYSTEM
    ============================================================ */
-```
+
