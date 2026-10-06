@@ -1,0 +1,26 @@
+title: "Cybersecurity CTF Portfolio"
+description: "Professional cybersecurity CTF, penetration testing, and security research documentation."
+
+lang: "en-US"
+
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+sass:
+  style: compressed
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
