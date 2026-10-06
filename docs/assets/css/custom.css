@@ -1,0 +1,1555 @@
+
+/*
+ * ============================================================
+ * CYBERSECURITY CTF PORTFOLIO — MASTER DESIGN SYSTEM
+ * ============================================================
+ *
+ * Purpose:
+ *   Shared visual design system for all CTF / cybersecurity
+ *   portfolio documentation published through GitHub Pages.
+ *
+ * Usage:
+ *   Place this file at:
+ *
+ *   docs/assets/css/custom.scss
+ *
+ * Design:
+ *   Green × Black Cybersecurity Research Theme
+ *
+ * Principles:
+ *   - Professional
+ *   - Technical
+ *   - Recruiter-friendly
+ *   - Responsive
+ *   - Accessible
+ *   - Minimal animation
+ *   - No external dependencies
+ *
+ * ============================================================
+ */
+
+
+/* ============================================================
+   01. DESIGN TOKENS
+   ============================================================ */
+
+:root {
+  --cyber-bg: #050807;
+  --cyber-bg-soft: #080e0b;
+  --cyber-panel: #0b1210;
+  --cyber-panel-2: #101a16;
+
+  --cyber-border: #1b3a2b;
+  --cyber-border-soft: rgba(57, 255, 136, 0.16);
+
+  --cyber-green: #39ff88;
+  --cyber-green-dark: #19c96b;
+  --cyber-green-soft: #9effc5;
+
+  --cyber-text: #d7ffe5;
+  --cyber-text-soft: #a7b8af;
+  --cyber-muted: #718278;
+
+  --cyber-warning: #f4c95d;
+  --cyber-danger: #ff6b6b;
+  --cyber-info: #7dd3fc;
+
+  --cyber-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35);
+
+  --cyber-glow:
+    0 0 22px rgba(57, 255, 136, 0.08);
+
+  --cyber-radius: 10px;
+  --cyber-radius-small: 6px;
+
+  --cyber-content-width: 1120px;
+
+  --cyber-font:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --cyber-mono:
+    "JetBrains Mono",
+    "Fira Code",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+}
+
+
+/* ============================================================
+   02. GLOBAL PAGE
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  background: var(--cyber-bg);
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(57, 255, 136, 0.055),
+      transparent 38%
+    ),
+    var(--cyber-bg);
+
+  color: var(--cyber-text);
+
+  font-family: var(--cyber-font);
+
+  line-height: 1.75;
+
+  min-height: 100vh;
+
+  text-rendering: optimizeLegibility;
+}
+
+
+/* subtle technical grid */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.025;
+
+  background-image:
+    linear-gradient(
+      rgba(57, 255, 136, 0.25) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(57, 255, 136, 0.25) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 75%
+  );
+
+  z-index: -1;
+}
+
+
+/* ============================================================
+   03. MAIN CONTENT CONTAINER
+   ============================================================ */
+
+main,
+.markdown-body,
+.container,
+.page-content {
+  max-width: var(--cyber-content-width);
+}
+
+.markdown-body {
+  margin: 0 auto;
+  padding: 42px 28px 80px;
+}
+
+
+/* ============================================================
+   04. TYPOGRAPHY
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--cyber-text);
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+
+  line-height: 1.3;
+
+  scroll-margin-top: 90px;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+
+  color: var(--cyber-green);
+
+  border-bottom: 1px solid var(--cyber-border);
+
+  padding-bottom: 18px;
+
+  margin-top: 0;
+}
+
+h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+
+  margin-top: 64px;
+
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid var(--cyber-border);
+
+  position: relative;
+}
+
+h2::before {
+  content: "//";
+
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  margin-right: 10px;
+
+  opacity: 0.8;
+}
+
+h3 {
+  font-size: 1.25rem;
+
+  color: var(--cyber-green-soft);
+
+  margin-top: 36px;
+}
+
+h4 {
+  color: var(--cyber-green-soft);
+}
+
+p {
+  color: var(--cyber-text-soft);
+
+  margin: 0 0 18px;
+}
+
+strong {
+  color: var(--cyber-text);
+}
+
+em {
+  color: var(--cyber-green-soft);
+}
+
+
+/* ============================================================
+   05. LINKS
+   ============================================================ */
+
+a {
+  color: var(--cyber-green);
+
+  text-decoration: none;
+
+  border-bottom: 1px solid transparent;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+a:hover {
+  color: #ffffff;
+
+  border-bottom-color: var(--cyber-green);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--cyber-green);
+
+  outline-offset: 3px;
+
+  border-radius: 3px;
+}
+
+
+/* ============================================================
+   06. HERO / INTRODUCTION
+   ============================================================ */
+
+.ctf-hero {
+  position: relative;
+
+  padding: 42px 34px;
+
+  margin: 0 0 42px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 255, 136, 0.08),
+      rgba(5, 8, 7, 0.95)
+    );
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  box-shadow: var(--cyber-shadow);
+
+  overflow: hidden;
+}
+
+.ctf-hero::before {
+  content: "CTF // SECURITY RESEARCH";
+
+  display: block;
+
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.16em;
+
+  margin-bottom: 14px;
+
+  opacity: 0.9;
+}
+
+.ctf-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -70px;
+  top: -70px;
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: 50%;
+
+  opacity: 0.35;
+}
+
+.ctf-hero h1 {
+  border: 0;
+
+  padding: 0;
+
+  margin: 0 0 14px;
+
+  max-width: 900px;
+}
+
+.ctf-hero p {
+  max-width: 850px;
+
+  font-size: 1.05rem;
+}
+
+
+/* ============================================================
+   07. BADGES
+   ============================================================ */
+
+.ctf-badges {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin: 20px 0;
+}
+
+.ctf-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 5px 10px;
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: 999px;
+
+  background: rgba(57, 255, 136, 0.055);
+
+  color: var(--cyber-green-soft);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.75rem;
+
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   08. INFORMATION CARDS
+   ============================================================ */
+
+.ctf-card-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 16px;
+
+  margin: 26px 0;
+}
+
+.ctf-card {
+  background: var(--cyber-panel);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  padding: 20px;
+
+  box-shadow: var(--cyber-glow);
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ctf-card:hover {
+  border-color: rgba(57, 255, 136, 0.45);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.3),
+    var(--cyber-glow);
+}
+
+.ctf-card-title {
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  margin-bottom: 8px;
+}
+
+.ctf-card-value {
+  color: var(--cyber-text);
+
+  font-size: 1.05rem;
+
+  font-weight: 600;
+}
+
+
+/* ============================================================
+   09. TABLE OF CONTENTS
+   ============================================================ */
+
+.ctf-toc {
+  background: var(--cyber-panel);
+
+  border: 1px solid var(--cyber-border);
+
+  border-left: 3px solid var(--cyber-green);
+
+  border-radius: var(--cyber-radius);
+
+  padding: 24px 28px;
+
+  margin: 28px 0 42px;
+
+  box-shadow: var(--cyber-glow);
+}
+
+.ctf-toc-title {
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+
+  margin-bottom: 12px;
+}
+
+.ctf-toc ul {
+  margin: 0;
+
+  padding-left: 20px;
+}
+
+.ctf-toc li {
+  margin: 5px 0;
+}
+
+
+/* ============================================================
+   10. TERMINAL / COMMAND BLOCKS
+   ============================================================ */
+
+pre {
+  position: relative;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16, 26, 22, 0.98),
+      rgba(7, 12, 10, 0.98)
+    ) !important;
+
+  border: 1px solid var(--cyber-border) !important;
+
+  border-radius: var(--cyber-radius-small) !important;
+
+  padding: 22px !important;
+
+  overflow-x: auto;
+
+  box-shadow:
+    inset 0 1px 0 rgba(57, 255, 136, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+
+  margin: 20px 0 28px;
+}
+
+pre::before {
+  content: "●  ●  ●";
+
+  display: block;
+
+  color: var(--cyber-muted);
+
+  font-size: 0.65rem;
+
+  letter-spacing: 4px;
+
+  margin-bottom: 15px;
+
+  opacity: 0.7;
+}
+
+code {
+  font-family: var(--cyber-mono);
+
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  background: rgba(57, 255, 136, 0.08);
+
+  border: 1px solid rgba(57, 255, 136, 0.12);
+
+  color: var(--cyber-green-soft);
+
+  padding: 2px 6px;
+
+  border-radius: 4px;
+}
+
+
+/* ============================================================
+   11. BLOCKQUOTES / CALLOUTS
+   ============================================================ */
+
+blockquote {
+  margin: 24px 0;
+
+  padding: 16px 20px;
+
+  background: rgba(57, 255, 136, 0.045);
+
+  border-left: 3px solid var(--cyber-green);
+
+  color: var(--cyber-text-soft);
+
+  border-radius: 0 var(--cyber-radius-small) var(--cyber-radius-small) 0;
+}
+
+blockquote strong {
+  color: var(--cyber-green);
+}
+
+
+/* Optional explicit callout classes */
+
+.callout {
+  margin: 24px 0;
+
+  padding: 18px 20px;
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  background: var(--cyber-panel);
+}
+
+.callout-title {
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+
+  margin-bottom: 8px;
+}
+
+.callout.warning {
+  border-left: 3px solid var(--cyber-warning);
+}
+
+.callout.danger {
+  border-left: 3px solid var(--cyber-danger);
+}
+
+.callout.info {
+  border-left: 3px solid var(--cyber-info);
+}
+
+
+/* ============================================================
+   12. TABLES
+   ============================================================ */
+
+table {
+  width: 100%;
+
+  margin: 24px 0 32px;
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+
+  background: var(--cyber-panel);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  overflow: hidden;
+
+  display: table;
+}
+
+thead {
+  background:
+    rgba(57, 255, 136, 0.07);
+}
+
+th {
+  color: var(--cyber-green-soft);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+
+  text-align: left;
+
+  padding: 13px 15px;
+
+  border-bottom: 1px solid var(--cyber-border);
+}
+
+td {
+  color: var(--cyber-text-soft);
+
+  padding: 12px 15px;
+
+  border-bottom: 1px solid rgba(57, 255, 136, 0.08);
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody tr {
+  transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+  background: rgba(57, 255, 136, 0.035);
+}
+
+
+/* ============================================================
+   13. FIGURES / SCREENSHOTS
+   ============================================================ */
+
+figure {
+  margin: 28px 0;
+
+  padding: 10px;
+
+  background: var(--cyber-panel);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  box-shadow: var(--cyber-shadow);
+
+  text-align: center;
+}
+
+figure img {
+  display: block;
+
+  max-width: 100%;
+
+  height: auto;
+
+  margin: 0 auto;
+
+  border-radius: 5px;
+}
+
+figcaption {
+  padding: 12px 8px 4px;
+
+  color: var(--cyber-muted);
+
+  font-size: 0.82rem;
+
+  font-family: var(--cyber-mono);
+
+  line-height: 1.5;
+}
+
+
+/* Standard Markdown images */
+
+.markdown-body img {
+  max-width: 100%;
+
+  height: auto;
+
+  border-radius: var(--cyber-radius-small);
+
+  border: 1px solid var(--cyber-border);
+
+  box-shadow: var(--cyber-shadow);
+}
+
+
+/* ============================================================
+   14. LISTS
+   ============================================================ */
+
+ul,
+ol {
+  color: var(--cyber-text-soft);
+}
+
+li {
+  margin: 5px 0;
+}
+
+li::marker {
+  color: var(--cyber-green-dark);
+}
+
+
+/* ============================================================
+   15. HORIZONTAL RULE
+   ============================================================ */
+
+hr {
+  border: 0;
+
+  height: 1px;
+
+  margin: 48px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--cyber-border),
+      transparent
+    );
+}
+
+
+/* ============================================================
+   16. SECURITY / ATTACK CHAIN
+   ============================================================ */
+
+.attack-chain {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 30px 0;
+
+  padding: 24px;
+
+  background: var(--cyber-panel);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+}
+
+.attack-step {
+  padding: 9px 13px;
+
+  background: rgba(57, 255, 136, 0.06);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: 6px;
+
+  color: var(--cyber-green-soft);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  text-align: center;
+}
+
+.attack-arrow {
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   17. TOOL TAGS
+   ============================================================ */
+
+.tool-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin: 18px 0 28px;
+}
+
+.tool-tag {
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  border: 1px solid var(--cyber-border);
+
+  background: var(--cyber-panel);
+
+  border-radius: 5px;
+
+  color: var(--cyber-green-soft);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.75rem;
+}
+
+
+/* ============================================================
+   18. SEVERITY LABELS
+   ============================================================ */
+
+.severity {
+  display: inline-block;
+
+  padding: 3px 8px;
+
+  border-radius: 4px;
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.severity-critical {
+  color: #fff;
+
+  background: rgba(255, 70, 70, 0.2);
+
+  border: 1px solid rgba(255, 70, 70, 0.45);
+}
+
+.severity-high {
+  color: #ffd6d6;
+
+  background: rgba(255, 107, 107, 0.13);
+
+  border: 1px solid rgba(255, 107, 107, 0.35);
+}
+
+.severity-medium {
+  color: #ffe8a3;
+
+  background: rgba(244, 201, 93, 0.1);
+
+  border: 1px solid rgba(244, 201, 93, 0.35);
+}
+
+.severity-low {
+  color: var(--cyber-green-soft);
+
+  background: rgba(57, 255, 136, 0.08);
+
+  border: 1px solid var(--cyber-border);
+}
+
+
+/* ============================================================
+   19. MITRE ATT&CK
+   ============================================================ */
+
+.mitre-technique {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 4px;
+
+  padding: 7px 11px;
+
+  background: rgba(57, 255, 136, 0.045);
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: 5px;
+
+  color: var(--cyber-green-soft);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.76rem;
+}
+
+.mitre-id {
+  color: var(--cyber-green);
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   20. COMMAND / RESULT PAIR
+   ============================================================ */
+
+.command-result {
+  margin: 24px 0;
+
+  border: 1px solid var(--cyber-border);
+
+  border-radius: var(--cyber-radius);
+
+  overflow: hidden;
+
+  background: var(--cyber-panel);
+}
+
+.command-result-header {
+  padding: 9px 14px;
+
+  background: rgba(57, 255, 136, 0.05);
+
+  border-bottom: 1px solid var(--cyber-border);
+
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.75rem;
+
+  text-transform: uppercase;
+}
+
+.command-result pre {
+  margin: 0;
+
+  border: 0 !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none;
+}
+
+
+/* ============================================================
+   21. KEY FINDING PANEL
+   ============================================================ */
+
+.key-finding {
+  padding: 22px;
+
+  margin: 26px 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 255, 136, 0.07),
+      rgba(11, 18, 16, 0.95)
+    );
+
+  border: 1px solid var(--cyber-border);
+
+  border-left: 4px solid var(--cyber-green);
+
+  border-radius: var(--cyber-radius);
+
+  box-shadow: var(--cyber-glow);
+}
+
+.key-finding-title {
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+
+  margin-bottom: 10px;
+}
+
+
+/* ============================================================
+   22. FOOTER
+   ============================================================ */
+
+.ctf-footer {
+  margin-top: 70px;
+
+  padding: 28px 0;
+
+  border-top: 1px solid var(--cyber-border);
+
+  text-align: center;
+
+  color: var(--cyber-muted);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.04em;
+}
+
+.ctf-footer strong {
+  color: var(--cyber-green);
+}
+
+
+/* ============================================================
+   23. SELECTION
+   ============================================================ */
+
+::selection {
+  background: rgba(57, 255, 136, 0.22);
+
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   24. SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 9px;
+
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #183426;
+
+  border-radius: 999px;
+
+  border: 2px solid var(--cyber-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #24583d;
+}
+
+
+/* ============================================================
+   25. RESPONSIVE — TABLETS
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+  .markdown-body {
+    padding: 32px 20px 60px;
+  }
+
+  .ctf-hero {
+    padding: 30px 24px;
+  }
+
+  h2 {
+    margin-top: 48px;
+  }
+
+  table {
+    display: block;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+  }
+
+  .attack-chain {
+    justify-content: flex-start;
+  }
+}
+
+
+/* ============================================================
+   26. RESPONSIVE — MOBILE
+   ============================================================ */
+
+@media (max-width: 560px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .markdown-body {
+    padding: 24px 15px 48px;
+  }
+
+  .ctf-hero {
+    padding: 24px 18px;
+
+    margin-bottom: 28px;
+  }
+
+  .ctf-hero h1 {
+    font-size: 1.9rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+
+    margin-top: 42px;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  pre {
+    padding: 16px !important;
+
+    font-size: 0.78rem;
+  }
+
+  .ctf-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctf-toc {
+    padding: 18px;
+  }
+
+  .attack-chain {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .attack-arrow {
+    text-align: center;
+
+    transform: rotate(90deg);
+  }
+
+  .ctf-badges {
+    gap: 6px;
+  }
+}
+
+
+/* ============================================================
+   27. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* ============================================================
+   28. PRINT
+   ============================================================ */
+
+@media print {
+
+  body {
+    background: #ffffff;
+
+    color: #111111;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  a {
+    color: #111111;
+
+    text-decoration: underline;
+  }
+
+  .ctf-hero,
+  .ctf-card,
+  .ctf-toc,
+  pre,
+  table,
+  figure {
+    box-shadow: none;
+
+    background: #ffffff;
+
+    border-color: #cccccc;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #111111;
+  }
+}
+/* ============================================================
+   29. GLOBAL PORTFOLIO SHELL
+   ============================================================ */
+
+.skip-link {
+  position: fixed;
+
+  top: 12px;
+  left: 12px;
+
+  z-index: 9999;
+
+  padding: 9px 14px;
+
+  background: var(--cyber-panel);
+
+  color: var(--cyber-green);
+
+  border: 1px solid var(--cyber-green);
+
+  border-radius: var(--cyber-radius-small);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.78rem;
+
+  transform: translateY(-160%);
+
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* ------------------------------------------------------------
+   Portfolio Header
+   ------------------------------------------------------------ */
+
+.portfolio-header {
+  width: 100%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 18, 16, 0.98),
+      rgba(5, 8, 7, 0.94)
+    );
+
+  border-bottom: 1px solid var(--cyber-border);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.22);
+
+  position: relative;
+
+  z-index: 10;
+}
+
+.portfolio-header-inner {
+  max-width: var(--cyber-content-width);
+
+  margin: 0 auto;
+
+  min-height: 64px;
+
+  padding: 0 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+/* ------------------------------------------------------------
+   Portfolio Brand
+   ------------------------------------------------------------ */
+
+.portfolio-brand {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  border-bottom: 0;
+
+  color: var(--cyber-green);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.portfolio-brand:hover {
+  border-bottom: 0;
+
+  color: #ffffff;
+}
+
+.portfolio-brand-symbol {
+  color: var(--cyber-green);
+
+  font-size: 1rem;
+
+  font-weight: 700;
+}
+
+.portfolio-brand-text {
+  color: var(--cyber-text);
+
+  white-space: nowrap;
+}
+
+
+/* ------------------------------------------------------------
+   Security Status
+   ------------------------------------------------------------ */
+
+.portfolio-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--cyber-muted);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.08em;
+
+  white-space: nowrap;
+}
+
+.status-indicator {
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--cyber-green);
+
+  box-shadow:
+    0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+
+/* ------------------------------------------------------------
+   Main Site Content
+   ------------------------------------------------------------ */
+
+.site-main {
+  width: 100%;
+
+  min-height: calc(100vh - 130px);
+}
+
+
+/* ------------------------------------------------------------
+   Global Footer
+   ------------------------------------------------------------ */
+
+.portfolio-global-footer {
+  border-top: 1px solid var(--cyber-border);
+
+  background: var(--cyber-bg-soft);
+
+  padding: 22px 20px;
+
+  margin-top: 30px;
+}
+
+.portfolio-footer-inner {
+  max-width: var(--cyber-content-width);
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  color: var(--cyber-muted);
+
+  font-family: var(--cyber-mono);
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.05em;
+
+  text-align: center;
+}
+
+.footer-separator {
+  color: var(--cyber-green);
+
+  opacity: 0.7;
+}
+
+
+/* ------------------------------------------------------------
+   Mobile Header
+   ------------------------------------------------------------ */
+
+@media (max-width: 560px) {
+
+  .portfolio-header-inner {
+    min-height: 58px;
+
+    padding: 0 15px;
+  }
+
+  .portfolio-brand-text {
+    font-size: 0.72rem;
+  }
+
+  .portfolio-status {
+    font-size: 0.58rem;
+  }
+
+  .portfolio-status span:last-child {
+    display: none;
+  }
+
+  .portfolio-footer-inner {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .footer-separator {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   END GLOBAL PORTFOLIO SHELL
+   ============================================================ */
+
+/* ============================================================
+   END OF CYBERSECURITY CTF PORTFOLIO DESIGN SYSTEM
+   ============================================================ */
