@@ -1,26 +1,43 @@
-```yaml
 title: "Cybersecurity CTF Portfolio"
+
 description: "Professional cybersecurity CTF, penetration testing, and security research documentation."
 
-theme: jekyll-theme-primer
+lang: "en-US"
 
 markdown: kramdown
 
 kramdown:
   input: GFM
+  hard_wrap: false
 
-plugins:
-  - jekyll-relative-links
-
-relative_links:
-  enabled: true
-  collections: true
+# ------------------------------------------------------------
+# GitHub Pages / Jekyll
+# ------------------------------------------------------------
 
 include:
   - docs
 
+# ------------------------------------------------------------
+# Default layout for all Markdown pages inside docs/
+# ------------------------------------------------------------
+
+defaults:
+  - scope:
+      path: "docs"
+    values:
+      layout: "default"
+
+# ------------------------------------------------------------
+# Sass
+# ------------------------------------------------------------
+
 sass:
+  sass_dir: assets/css
   style: compressed
+
+# ------------------------------------------------------------
+# Exclusions
+# ------------------------------------------------------------
 
 exclude:
   - README.md
@@ -28,4 +45,5 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
-```
+  - .github
+  - .git
