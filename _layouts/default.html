@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="{{ page.description | default: site.description | escape }}"
+  >
+
+  <meta
+    name="theme-color"
+    content="#050807"
+  >
+
+  <meta
+    name="color-scheme"
+    content="dark"
+  >
+
+  <title>
+    {% if page.title %}
+      {{ page.title }} — {{ site.title }}
+    {% else %}
+      {{ site.title }}
+    {% endif %}
+  </title>
+
+  <!-- ======================================================
+       MASTER CYBERSECURITY PORTFOLIO STYLESHEET
+       ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="{{ '/assets/css/custom.css' | relative_url }}"
+  >
+
+</head>
+
+
+<body>
+
+  <!-- ======================================================
+       ACCESSIBILITY
+       ====================================================== -->
+
+  <a
+    href="#main-content"
+    class="skip-link"
+  >
+    Skip to main content
+  </a>
+
+
+  <!-- ======================================================
+       SITE HEADER
+       ====================================================== -->
+
+  <header class="portfolio-header">
+
+    <div class="portfolio-header-inner">
+
+      <a
+        class="portfolio-brand"
+        href="{{ '/' | relative_url }}"
+        aria-label="Cybersecurity CTF Portfolio home"
+      >
+
+        <span class="portfolio-brand-symbol">
+          &gt;_
+        </span>
+
+        <span class="portfolio-brand-text">
+          CYBERSECURITY
+        </span>
+
+      </a>
+
+
+      <div class="portfolio-status">
+
+        <span class="status-indicator"></span>
+
+        <span>
+          SECURITY RESEARCH
+        </span>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ======================================================
+       MAIN CONTENT
+       ====================================================== -->
+
+  <main
+    id="main-content"
+    class="site-main"
+  >
+
+    <article class="markdown-body">
+
+      {{ content }}
+
+    </article>
+
+  </main>
+
+
+  <!-- ======================================================
+       GLOBAL FOOTER
+       ====================================================== -->
+
+  <footer class="portfolio-global-footer">
+
+    <div class="portfolio-footer-inner">
+
+      <span>
+        CYBERSECURITY CTF PORTFOLIO
+      </span>
+
+      <span class="footer-separator">
+        //
+      </span>
+
+      <span>
+        SECURITY RESEARCH • PRACTICE • DEFENSE
+      </span>
+
+    </div>
+
+  </footer>
+
+</body>
+
+</html>
