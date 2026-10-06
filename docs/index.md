@@ -1,9 +1,15 @@
+---
+layout: default
+title: "Airplane — TryHackMe Penetration Testing Walkthrough"
+description: "Professional penetration testing documentation for the Airplane TryHackMe room, covering reconnaissance, LFI, Linux enumeration, gdbserver exploitation, remote code execution, and privilege escalation to root."
+---
+
 <div class="ctf-hero">
 
 # ✈️ Airplane — TryHackMe Penetration Testing Walkthrough
 
 <p>
-This documentation presents a complete penetration testing walkthrough for the <strong>Airplane</strong> room on <strong>TryHackMe</strong>, following a professional offensive security methodology from reconnaissance to root privilege escalation.
+This documentation presents a complete penetration testing walkthrough for the <strong>Airplane</strong> room on <strong>TryHackMe</strong>, following a professional offensive security methodology from reconnaissance through web exploitation, Linux enumeration, remote code execution, privilege escalation, and root access.
 </p>
 
 <div class="ctf-badges">
@@ -628,14 +634,39 @@ The exercise also reinforced the importance of:
 
 # Assessment Outcome
 
-| Objective | Status |
-|---|---|
-| Reconnaissance | <span class="severity severity-low">Completed</span> |
-| Web Enumeration | <span class="severity severity-low">Completed</span> |
-| LFI Exploitation | <span class="severity severity-low">Completed</span> |
-| Remote Code Execution | <span class="severity severity-low">Completed</span> |
-| Privilege Escalation | <span class="severity severity-low">Completed</span> |
-| Root Access | <span class="severity severity-low">Completed</span> |
+<div class="ctf-card-grid">
+
+<div class="ctf-card">
+<div class="ctf-card-title">Reconnaissance</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+<div class="ctf-card">
+<div class="ctf-card-title">Web Enumeration</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+<div class="ctf-card">
+<div class="ctf-card-title">LFI Exploitation</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+<div class="ctf-card">
+<div class="ctf-card-title">Remote Code Execution</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+<div class="ctf-card">
+<div class="ctf-card-title">Privilege Escalation</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+<div class="ctf-card">
+<div class="ctf-card-title">Root Access</div>
+<div class="ctf-card-value">Completed</div>
+</div>
+
+</div>
 
 The documented assessment successfully progressed from external reconnaissance through web exploitation and local privilege escalation to **full administrative access**.
 
