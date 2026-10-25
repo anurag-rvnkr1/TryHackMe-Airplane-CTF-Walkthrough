@@ -77,38 +77,39 @@ This documentation presents a complete penetration testing walkthrough for the <
 <div class="ctf-toc">
 
 <div class="ctf-toc-title">Navigation</div>
-
-- [Executive Summary](#executive-summary)
-- [Assessment Methodology](#assessment-methodology)
-- [Attack Chain](#attack-chain)
-- [Reconnaissance](#1-reconnaissance)
-  - [Host Resolution](#host-resolution)
-  - [Full TCP Port Scan](#full-tcp-port-scan)
-  - [Service Enumeration](#service-enumeration)
-- [Web Application Enumeration](#2-web-application-enumeration)
-  - [Local File Inclusion Discovery](#local-file-inclusion-discovery)
-  - [Reading Sensitive Files](#reading-sensitive-files)
-- [Linux Enumeration](#3-linux-enumeration)
-  - [Enumerating `/proc/net/tcp`](#enumerating-procnettcp)
-  - [Process Enumeration](#process-enumeration)
-- [Initial Access](#4-initial-access)
-  - [Remote Code Execution](#remote-code-execution)
-  - [Shell Stabilization](#shell-stabilization)
-- [Privilege Escalation](#5-privilege-escalation)
-  - [SUID Enumeration](#suid-enumeration)
-  - [GTFOBins Technique](#gtfobins-technique)
-  - [SSH Persistence](#ssh-persistence)
-  - [Wildcard `sudo` Misconfiguration](#wildcard-sudo-misconfiguration)
-  - [Root Verification](#root-verification)
-- [MITRE ATT&CK Mapping](#mitre-attck-mapping)
-- [Tools Used](#tools-used)
-- [Security Findings](#security-findings)
-- [Security Recommendations](#security-recommendations)
-- [Lessons Learned](#lessons-learned)
-- [Assessment Outcome](#assessment-outcome)
-- [References](#references)
-- [Responsible Use](#responsible-use)
-- [Repository Information](#repository-information)
+  <ul>
+    <li><a href="#executive-summary">Executive Summary</a></li>
+    <li><a href="#assessment-methodology">Assessment Methodology</a></li>
+    <li><a href="#attack-chain">Attack Chain</a></li>
+    <li><a href="#1-reconnaissance">Reconnaissance</a></li>
+    <li><a href="#host-resolution">Host Resolution</a></li>
+    <li><a href="#full-tcp-port-scan">Full TCP Port Scan</a></li>
+    <li><a href="#service-enumeration">Service Enumeration</a></li>
+    <li><a href="#2-web-application-enumeration">Web Application Enumeration</a></li>
+    <li><a href="#local-file-inclusion-discovery">Local File Inclusion Discovery</a></li>
+    <li><a href="#reading-sensitive-files">Reading Sensitive Files</a></li>
+    <li><a href="#3-linux-enumeration">Linux Enumeration</a></li>
+    <li><a href="#enumerating-procnettcp">Enumerating <code>/proc/net/tcp</code></a></li>
+    <li><a href="#process-enumeration">Process Enumeration</a></li>
+    <li><a href="#4-initial-access">Initial Access</a></li>
+    <li><a href="#remote-code-execution">Remote Code Execution</a></li>
+    <li><a href="#shell-stabilization">Shell Stabilization</a></li>
+    <li><a href="#5-privilege-escalation">Privilege Escalation</a></li>
+    <li><a href="#suid-enumeration">SUID Enumeration</a></li>
+    <li><a href="#gtfobins-technique">GTFOBins Technique</a></li>
+    <li><a href="#ssh-persistence">SSH Persistence</a></li>
+    <li><a href="#wildcard-sudo-misconfiguration">Wildcard <code>sudo</code> Misconfiguration</a></li>
+    <li><a href="#root-verification">Root Verification</a></li>
+    <li><a href="#mitre-attck-mapping">MITRE ATT&amp;CK Mapping</a></li>
+    <li><a href="#tools-used">Tools Used</a></li>
+    <li><a href="#security-findings">Security Findings</a></li>
+    <li><a href="#security-recommendations">Security Recommendations</a></li>
+    <li><a href="#lessons-learned">Lessons Learned</a></li>
+    <li><a href="#assessment-outcome">Assessment Outcome</a></li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#responsible-use">Responsible Use</a></li>
+    <li><a href="#repository-information">Repository Information</a></li>
+  </ul>
 
 </div>
 
